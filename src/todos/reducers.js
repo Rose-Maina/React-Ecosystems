@@ -33,14 +33,22 @@ export const todos = (state = [], action) => {
             return state.filter(todo => todo.id !== todoToRemove.id);
         }
         case MARK_TODO_AS_COMPLETED: {
-            const { text } = payload;
+            const { todo: updatedTodo } = payload;
             return state.map(todo => {
-                if (todo.text === text) {
-                    return {...todo, isCompleted: true};
+                if (todo.id === updatedTodo.id) {
+                    return updatedTodo;
                 }
                 return todo;
             })
         }
+        // case MARK_TODO_AS_COMPLETED: {
+        //     return state.map(todo => {
+        //         if (todo.text === text) {
+        //             return {...todo, isCompleted: true};
+        //         }
+        //         return todo;
+        //     })
+        // }
         case LOAD_TODOS_SUCCESS: {
             const { todos } = payload;
             return todos;
