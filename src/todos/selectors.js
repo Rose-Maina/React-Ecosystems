@@ -9,3 +9,14 @@ export const getIncompleteTodos = createSelector(
     (todos) => 
     todos.filter(todo => !todo.isCompleted),
 )
+
+export const getCompletedTodos = createSelector(
+    getTodos,
+    (todos) => 
+    todos.filter(todo => todo.isCompleted)
+);
+
+// export const getCompletedTodos = state => {
+//     const { data: todos } = state.todos
+//     return todos.filter(todo => todo.isCompleted);
+// };

@@ -6,9 +6,12 @@ import {loadTodos, removeTodoRequest, markTodoAsCompletedRequest } from './thunk
 // import {  markTodoAsCompleted } from './actions';
 // import { displayAlert } from './thunks';
 import './TodoList.css';
-import { getTodos, getTodosLoading } from './selectors';
+import { getTodos, 
+    getTodosLoading ,
+    getCompletedTodos,
+    getIncompleteTodos } from './selectors';
 
-const TodoList = ({ todos = [], onRemovePressed, onCompletedPressed, isLoading, startLoadingTodos }) => {
+const TodoList = ({ completedTodos, incompleteTodos, onRemovePressed, onCompletedPressed, isLoading, startLoadingTodos }) => {
     useEffect(() => {
         startLoadingTodos();
     }, []);
@@ -18,12 +21,21 @@ const TodoList = ({ todos = [], onRemovePressed, onCompletedPressed, isLoading, 
     (
         <div className="list-wrapper">
             <NewTodoForm />
-            {todos.map(todo => <TodoListItem 
+            <h3>Incomplete:</h3>
+            {incompleteTodos.map(todo => <TodoListItem 
             todo={todo} 
             onRemovePressed={onRemovePressed}
-            onCompletedPressed={onCompletedPressed}
-
-            />)}
+            onCompletedPressed={onCompletedPressed}/>)}
+            <h3>Completed:</h3>
+            {completedTodos.map(todo => <TodoListItem 
+            todo={todo} 
+            onRemovePressed={onRemovePressed}
+            onCompletedPressed={onCompletedPressed}/>)}
+            {/* {todos.map(todo => <TodoListItem 
+            todo={todo} 
+            onRemovePressed={onRemovePressed}
+            onCompletedPressed={onCompletedPressed}/>)} */}
+            
         </div>   
 );
     return isLoading ? loadingMessage: content;
@@ -31,8 +43,11 @@ const TodoList = ({ todos = [], onRemovePressed, onCompletedPressed, isLoading, 
 
 const mapStateToProps = state => ({
     isLoading: getTodosLoading(state),
-    todos: getTodos(state),
+    // todos: getTodos(state),
+    completedTodos: getCompletedTodos(state),
+    incompleteTodos: getIncompleteTodos(state),
 });
+
 
 const mapDispatchToProps = dispatch => ({
     startLoadingTodos: () => dispatch(loadTodos()),
