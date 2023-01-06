@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import {getTodos} from './selectors';
 import styled from 'styled-components';
 import { addTodoRequest } from './thunks';
-import './NewTodoForm.css';
 
 const FormContainer = styled.div`
     border-radius: 8px;
@@ -23,18 +22,30 @@ const NewTodoInput = styled.input`
     outline: none;
 `;
 
+const NewTodoButton = styled.button`
+    font-size: 16px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    margin-left: 8px;
+    width: 20%;
+    background-color: #22ee22;
+`
+
 const NewTodoForm = ({ todos, onCreatePressed }) => {
     const [inputValue, setInputValue] = useState('')
     
     return (
     <FormContainer>
-        <input classname="new-todo-input" 
+        <NewTodoInput
+            classname="new-todo-input" 
             placeholder="Type your new todo here" 
             type="text" 
             value={inputValue} 
             onChange={e => setInputValue(e.target.value)} />
-        <button 
-        onClick = {() => {
+        <NewTodoButton onClick = {() => {
             const isDuplicateText = 
                 todos.some(todo => todo.text === inputValue)
             if (!isDuplicateText){
@@ -42,7 +53,7 @@ const NewTodoForm = ({ todos, onCreatePressed }) => {
                 setInputValue('');
             }
         }}
-        className="new-todo-button">Create Todo</button>
+        className="new-todo-button">Create Todo</NewTodoButton>
     </FormContainer>
 )
 }
