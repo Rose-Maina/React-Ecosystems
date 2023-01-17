@@ -20,3 +20,4 @@ export const getCompletedTodos = createSelector(
 //     const { data: todos } = state.todos
 //     return todos.filter(todo => todo.isCompleted);
 // };
+
